@@ -1,20 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import { TailwindProvider } from "tailwind-rn";
+import utilities from "./tailwind.json";
+import {useTailwind} from 'tailwind-rn';
+
+// screens
+import CustomerScreen from "./screens/CustumerScreen";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    // @ts-ignore - tailwind is missing type definition
+    <TailwindProvider utilities={utilities}>
+      <CustomerScreen />
+    </TailwindProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
