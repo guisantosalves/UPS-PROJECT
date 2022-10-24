@@ -12,7 +12,7 @@ import { NavigationContainer } from "@react-navigation/native";
 export default function App() {
 
   const client = new ApolloClient({
-    uri: 'http://localhost:5001/api/zeroed-dog',
+    uri: 'http://192.168.88.15:5001/api/zeroed-dog',
     cache: new InMemoryCache(),
   });
 
