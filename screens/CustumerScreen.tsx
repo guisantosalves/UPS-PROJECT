@@ -41,7 +41,8 @@ const CustomerScreen = () => {
       headerShown: false,
     });
   }, []);
- 
+  
+  console.log(data)
   // container style is a property of component from "@rneui/base"
   return (
     <ScrollView style={{ backgroundColor: "#59c1cc" }}>

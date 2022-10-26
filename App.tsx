@@ -10,9 +10,9 @@ import CustomerScreen from "./screens/CustumerScreen";
 import { NavigationContainer } from "@react-navigation/native";
 
 export default function App() {
-
+  // uri: 'http://192.168.88.15:5001/api/zeroed-dog',
   const client = new ApolloClient({
-    uri: 'http://192.168.88.15:5001/api/zeroed-dog',
+    uri: 'http://192.168.88.11:5001/api/zeroed-dog',
     cache: new InMemoryCache(),
   });
 
