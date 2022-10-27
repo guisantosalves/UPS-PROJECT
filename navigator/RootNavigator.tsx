@@ -21,6 +21,7 @@ const RootNavigator = () => {
             </RootStack.Group>
             <RootStack.Group screenOptions={{
                 presentation: "modal",
+                animation: "slide_from_bottom",
             }}>
                 <RootStack.Screen 
                     options={{headerShown: false}} 

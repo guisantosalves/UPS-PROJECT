@@ -1,12 +1,70 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import React from "react";
+import { Icon } from "@rneui/themed";
+import { useTailwind } from "tailwind-rn/dist";
+import {
+  CompositeNavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { tabStackParamList } from "../navigator/TabNavigator";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../navigator/RootNavigator";
+import DeliveryCard from "../components/DeliveryCard";
+import useCustomerOrders from "../hooks/useCustumerOrders";
+
+type ModalScreenNavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<tabStackParamList>,
+  NativeStackNavigationProp<RootStackParamList, "MyModal">
+>;
+
+// to get the data that route passes from params
+type ModalScreenRouteProp = RouteProp<RootStackParamList, "MyModal">;
 
 const ModalScreen = () => {
+  const tw = useTailwind();
+  const navigation = useNavigation();
+
+  // getting data from navigation params
+  const {
+    params: { name, userId },
+  } = useRoute<ModalScreenRouteProp>();
+
+  // using custom hooks
+  const { loading, error, orders } = useCustomerOrders(userId);
+
   return (
     <View>
-      <Text>ModalScreen</Text>
-    </View>
-  )
-}
+      <TouchableOpacity
+        onPress={navigation.goBack}
+        style={tw("absolute right-5 top-5 z-10")}
+      >
+        <Icon name="closecircle" type="antdesign" size={27} />
+      </TouchableOpacity>
 
-export default ModalScreen
+      <View style={{ marginTop: 20 }}>
+        <View style={[tw("py-5 border-b"), { borderColor: "#59C1CC" }]}>
+          <Text
+            style={[tw("text-center text-xl font-bold"), { color: "#59C1CC" }]}
+          >
+            {name}
+          </Text>
+          <Text style={[tw("text-center italic text-sm")]}>Deliveries</Text>
+        </View>
+      </View>
+
+      {/* keyextractor is getiing the key in a map func */}
+      {/* order in render items is   */}
+      <FlatList
+        contentContainerStyle={{paddingBottom: 200}}
+        data={orders}
+        keyExtractor={(order) => order.trackingId}
+        renderItem={({ item: order }) => <DeliveryCard order={order} />}
+      />
+    </View>
+  );
+};
+
+export default ModalScreen;
